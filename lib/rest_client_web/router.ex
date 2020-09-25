@@ -17,7 +17,7 @@ defmodule RestClientWeb.Router do
   scope "/", RestClientWeb do
     pipe_through :browser
 
-    live "/", PageLive, :index
+    live "/", ClientLive, :index
   end
 
   # Other scopes may use custom stacks.

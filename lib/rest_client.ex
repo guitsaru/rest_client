@@ -1,9 +1,18 @@
 defmodule RestClient do
-  @moduledoc """
-  RestClient keeps the contexts that define your domain
-  and business logic.
+  alias RestClient.Request
 
-  Contexts are also responsible for managing your data, regardless
-  if it comes from the database, an external API or others.
-  """
+  @spec make_request(%Request{}) :: Mojito.Response.t()
+  def make_request(%Request{} = request) do
+    IO.inspect(request)
+
+    case Mojito.request(
+           request.action,
+           request.location,
+           Enum.map(request.headers, fn header -> {header.key, header.value} end),
+           request.body
+         ) do
+      {:ok, response} -> response
+      _ -> {:ok, %{}}
+    end
+  end
 end

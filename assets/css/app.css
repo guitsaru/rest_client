@@ -1,0 +1,15 @@
+@import "../node_modules/nprogress/nprogress.css";
+
+@tailwind base;
+
+@tailwind components;
+
+/* Put your custom components here */
+
+@tailwind utilities;
+
+/* Put your custom utilities here */
+
+.CodeMirror {
+  flex: 1 1 auto;
+}
