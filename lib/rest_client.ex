@@ -3,8 +3,6 @@ defmodule RestClient do
 
   @spec make_request(%Request{}) :: Mojito.Response.t()
   def make_request(%Request{} = request) do
-    IO.inspect(request)
-
     case Mojito.request(
            request.action,
            request.location,

@@ -31,7 +31,7 @@ let Hooks = {};
 Hooks.InitializeEditor = {
   initEditor() {
     const hook = this;
-    const mimetype = this.el.dataset.mimetype.split(";")[0];
+    const mimetype = this.el.dataset.mimetype.split(";")[0].toLowerCase();
 
     const editor = CodeMirror.fromTextArea(this.el, {
       mode: this.mode(mimetype),
