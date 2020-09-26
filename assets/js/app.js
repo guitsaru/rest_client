@@ -12,7 +12,6 @@ import "../css/app.css";
 //     import {Socket} from "phoenix"
 //     import socket from "./socket"
 //
-import "alpinejs";
 import "phoenix_html";
 import { Socket } from "phoenix";
 import NProgress from "nprogress";
@@ -42,6 +41,7 @@ Hooks.InitializeEditor = {
     const code = editor.getValue();
     const beautified = this.beautify(code, mimetype);
     editor.setValue(beautified);
+    editor.on("change", () => editor.save());
   },
 
   mounted() {

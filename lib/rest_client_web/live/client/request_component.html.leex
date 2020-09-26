@@ -1,4 +1,4 @@
-<div class="flex flex-col flex-auto ml-2 bg-white rounded-lg shadow" x-data="{ tab: 'body' }">
+<div class="flex flex-col flex-auto ml-2 bg-white rounded-lg shadow">
   <div class="flex items-center px-4 py-5 border-b border-gray-200 sm:px-6">
     <h3 class="ml-2 mr-8 text-lg font-medium leading-6 text-gray-900">
       Request
@@ -8,54 +8,100 @@
       <nav class="flex">
         <a
           href="#"
-          class="px-3 py-2 text-sm font-medium leading-5 text-blue-700 bg-blue-100 rounded-md focus:outline-none focus:text-blue-800 focus:bg-blue-200"
-          :class="{
-            'text-blue-700 bg-blue-100 focus:text-blue-800 focus:bg-blue-200': tab === 'body',
-            'text-gray-500 hover:text-gray-700 focus:text-blue-600 focus:bg-blue-100': tab !== 'body',
-          }"
-          aria-current="page"
-          @click="tab = 'body'"
+          class="tab <%= if @current_tab == "body", do: "active", else: "inactive" %>"
+          phx-click="set_current_tab"
+          phx-value-name="body"
+          phx-target="<%= @myself %>"
+          <%= if @current_tab == "body", do: "aria-current=\"page\"" %>
         >
           Body
         </a>
 
         <a
           href="#"
-          class="px-3 py-2 text-sm font-medium leading-5 text-blue-700 bg-blue-100 rounded-md focus:outline-none focus:text-blue-800 focus:bg-blue-200"
-          :class="{
-            'text-blue-700 bg-blue-100 focus:text-blue-800 focus:bg-blue-200': tab === 'headers',
-            'text-gray-500 hover:text-gray-700 focus:text-blue-600 focus:bg-blue-100': tab !== 'headers',
-          }"
-          aria-current="page"
-          @click="tab = 'headers'"
+          class="tab <%= if @current_tab == "headers", do: "active", else: "inactive" %>"
+          phx-click="set_current_tab"
+          phx-value-name="headers"
+          phx-target="<%= @myself %>"
+          <%= if @current_tab == "headers", do: "aria-current=\"page\"" %>
         >
           Headers
         </a>
       </nav>
     </div>
-  </div>
 
-  <div id="request-body" class="flex flex-col flex-auto px-4 py-5 sm:p-6" phx-update="replace" x-show="tab === 'body'">
-    <%= textarea @f, :body, [phx_hook: "InitializeEditor", class: "w-full", data: [mimetype: "application/json"]] %>
-  </div>
-
-  <div class="flex flex-col flex-auto px-4 py-5 sm:p-6" x-show="tab === 'headers'">
-    <a href="#" class="text-blue-500 underline" phx-click="add_header">Add Header</a>
-
-    <%= inputs_for @f, :headers, fn hf -> %>
-      <div class="flex w-full mt-4">
-        <div class="relative flex-auto col-span-2 rounded-md shadow-sm">
-          <%= label hf, :key, class: "hidden text-sm font-medium leading-5 text-gray-700" %>
-          <%= text_input hf, :key, class: "form-input block w-full sm:text-sm sm:leading-5", placeholder: "Key" %>
-        </div>
-
-        <div class="relative flex-auto col-span-2 ml-4 rounded-md shadow-sm">
-          <%= label hf, :value, class: "hidden text-sm font-medium leading-5 text-gray-700" %>
-          <%= text_input hf, :value, class: "form-input block w-full sm:text-sm sm:leading-5", placeholder: "Value" %>
-        </div>
-
-        <a href="#" class="ml-4 text-red-500" phx-click="delete_header" phx-value-id="<%= hf.data.id %>">delete</a>
-      </div>
+    <%= if @object.complete do %>
+      <div><%= status_badge(assigns.object.status) %></div>
     <% end %>
   </div>
+
+  <%= if @current_tab == "body" && !@object.complete do %>
+    <div id="<%= @id %>-body" phx-update="ignore" class="flex flex-col flex-auto">
+      <%= textarea @f, :body, [phx_hook: "InitializeEditor", class: "w-full", data: [mimetype: "application/json"]] %>
+    </div>
+  <% end %>
+
+  <%= if @current_tab == "body" && @object.complete do %>
+    <textarea phx-hook="InitializeEditor" class="w-full h-auto" data-readonly=true data-mimetype="<%= Enum.into(@object.headers, %{})["content-type"] %>" disabled>
+      <%= @object.body %>
+    </textarea>
+  <% end %>
+
+  <%= if @current_tab == "headers" && @object.complete do %>
+    <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+      <div class="inline-block w-full py-2 align-middle sm:px-6 lg:px-8">
+        <div class="overflow-x-auto">
+          <table class="w-full divide-y divide-gray-200">
+            <thead>
+              <tr>
+                <th class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase bg-gray-50">
+                  Key
+                </th>
+                <th class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase bg-gray-50">
+                  Value
+                </th>
+                <th class="px-6 py-3 bg-gray-50"></th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <%= for {key, value} <- assigns.object.headers do %>
+                <tr>
+                  <td class="px-6 py-4 text-sm font-medium leading-5 text-gray-900 whitespace-no-wrap">
+                    <%= key %>
+                  </td>
+
+                  <td class="px-6 py-4 text-sm leading-5 text-gray-500 break-word">
+                    <%= value %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <%= if @current_tab == "headers" && !@object.complete do %>
+    <div class="flex flex-col flex-auto px-4 py-5 sm:p-6">
+      <a href="#" class="text-blue-500 underline" phx-click="add_header">Add Header</a>
+
+      <%= inputs_for @f, :headers, fn hf -> %>
+        <div class="flex w-full mt-4">
+          <div class="relative flex-auto col-span-2 rounded-md shadow-sm">
+            <%= label hf, :key, class: "hidden text-sm font-medium leading-5 text-gray-700" %>
+            <%= text_input hf, :key, class: "form-input block w-full sm:text-sm sm:leading-5", placeholder: "Key" %>
+          </div>
+
+          <div class="relative flex-auto col-span-2 ml-4 rounded-md shadow-sm">
+            <%= label hf, :value, class: "hidden text-sm font-medium leading-5 text-gray-700" %>
+            <%= text_input hf, :value, class: "form-input block w-full sm:text-sm sm:leading-5", placeholder: "Value" %>
+          </div>
+
+          <a href="#" class="ml-4 text-red-500" phx-click="delete_header" phx-value-id="<%= hf.data.id %>">delete</a>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
 </div>

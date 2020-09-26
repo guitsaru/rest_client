@@ -7,7 +7,6 @@
     "watch": "webpack --mode development --watch"
   },
   "dependencies": {
-    "alpinejs": "^2.7.0",
     "codemirror": "^5.58.1",
     "js-beautify": "^1.13.0",
     "nprogress": "^0.2.0",

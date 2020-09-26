@@ -1,21 +1,15 @@
 defmodule RestClient.Request do
   use Ecto.Schema
 
-  defmodule Header do
-    use Ecto.Schema
-
-    embedded_schema do
-      field :key, :string
-      field :value, :string
-    end
-  end
+  alias RestClient.Header
 
   @primary_key false
   embedded_schema do
     field :action, :string
     field :location, :string
     field :body, :string
+    field :complete, :boolean, default: false
 
-    embeds_many :headers, __MODULE__.Header
+    embeds_many :headers, Header
   end
 end

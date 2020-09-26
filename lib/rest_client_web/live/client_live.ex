@@ -4,13 +4,12 @@ defmodule RestClientWeb.ClientLive do
 
   import Ecto.Changeset
 
-  alias RestClient.Request
+  alias RestClient.{Request, Response}
 
   alias RestClientWeb.Client.{
     HeaderComponent,
     LocationBarComponent,
-    RequestComponent,
-    ResponseComponent
+    RequestComponent
   }
 
   @impl true
@@ -25,8 +24,8 @@ defmodule RestClientWeb.ClientLive do
         <%= live_component @socket, LocationBarComponent, form: assigns[:form], f: f %>
 
         <div class="grid flex-auto grid-cols-2 p-6">
-          <%= live_component @socket, RequestComponent, f: f %>
-          <%= live_component @socket, ResponseComponent, assigns %>
+          <%= live_component @socket, RequestComponent, id: "request", f: f, object: assigns[:request] %>
+          <%= live_component @socket, RequestComponent, id: "response", f: f, object: assigns[:response] %>
         </div>
       </div>
     </form>
@@ -43,7 +42,7 @@ defmodule RestClientWeb.ClientLive do
       socket
       |> assign(:request, request)
       |> assign(:form, form)
-      |> assign(:response, %{headers: [], body: "", status_code: nil})
+      |> assign(:response, %Response{})
 
     {:ok, socket}
   end
@@ -83,7 +82,7 @@ defmodule RestClientWeb.ClientLive do
 
   def handle_event("add_header", _, socket) do
     request = socket.assigns.request
-    headers = request.headers ++ [%RestClient.Request.Header{id: Ecto.UUID.generate()}]
+    headers = request.headers ++ [%RestClient.Header{id: Ecto.UUID.generate()}]
     request = %{request | headers: headers}
     form = change(request, %{})
 

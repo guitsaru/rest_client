@@ -10,6 +10,34 @@
 
 /* Put your custom utilities here */
 
+.tab {
+  @apply px-3 py-2 text-sm font-medium leading-5 text-blue-700 rounded-md;
+}
+
+.tab:focus {
+  @apply outline-none text-blue-800 bg-blue-200;
+}
+
+.tab.active {
+  @apply text-blue-700 bg-blue-100 ;
+}
+
+.tab.active:focus {
+  @apply text-blue-800 bg-blue-200;
+}
+
+.tab.inactive {
+  @apply text-gray-500;
+}
+
+.tab.inactive:hover {
+  @apply text-gray-700;
+}
+
+.tab.inactive:focus {
+  @apply text-blue-600 bg-blue-100;
+}
+
 .CodeMirror {
   flex: 1 1 auto;
 }
