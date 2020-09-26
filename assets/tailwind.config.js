@@ -2,8 +2,8 @@ const defaultTheme = require("tailwindcss/defaultTheme");
 
 module.exports = {
   future: {
-    // removeDeprecatedGapUtilities: true,
-    // purgeLayersByDefault: true,
+    removeDeprecatedGapUtilities: true,
+    purgeLayersByDefault: true,
   },
   purge: [
     "../lib/rest_client_web/templates/**/*.eex",

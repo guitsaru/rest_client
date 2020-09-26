@@ -8,7 +8,7 @@ defmodule RestClient.Application do
   def start(_type, _args) do
     children = [
       # Start the Ecto repository
-      RestClient.Repo,
+      # RestClient.Repo,
       # Start the Telemetry supervisor
       RestClientWeb.Telemetry,
       # Start the PubSub system

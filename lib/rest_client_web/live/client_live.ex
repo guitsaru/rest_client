@@ -68,6 +68,7 @@ defmodule RestClientWeb.ClientLive do
     changeset =
       socket.assigns.request
       |> cast(attributes, [:action, :location, :body])
+      |> validate_required([:action, :location])
       |> cast_embed(:headers, with: &headers_changeset/2)
 
     request = apply_changes(changeset)
