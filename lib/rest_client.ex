@@ -3,7 +3,7 @@ defmodule RestClient do
 
   alias RestClient.{Header, Request, Response}
 
-  @spec make_request(%Request{}) :: Response.t()
+  @spec make_request(%Request{}) :: %Response{}
   def make_request(%Request{} = request) do
     headers =
       request.headers
@@ -19,7 +19,7 @@ defmodule RestClient do
       {:ok, response} ->
         Response.from_mojito(response)
 
-      {:error, %_{message: message} = x} ->
+      {:error, %_{message: message}} ->
         %Response{status: 400, body: message}
     end
   end
