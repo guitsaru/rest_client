@@ -1,4 +1,6 @@
 defmodule RestClientWeb.Client.RequestComponent do
+  @moduledoc "The component to render a request/response"
+
   use Phoenix.HTML
   use Phoenix.LiveComponent
 

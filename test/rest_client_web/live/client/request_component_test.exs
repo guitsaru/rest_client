@@ -5,12 +5,13 @@ defmodule RestClientWeb.Client.RequestComponentTest do
 
   import Phoenix.LiveViewTest
 
+  alias Phoenix.HTML.Form
   alias RestClientWeb.Client.RequestComponent
 
   test "render" do
     object = %RestClient.Request{}
     form = Ecto.Changeset.change(object, %{})
-    f = Phoenix.HTML.Form.form_for(form, "#")
+    f = Form.form_for(form, "#")
 
     assert render_component(RequestComponent, id: "test component", object: object, f: f) =~
              "Test component"

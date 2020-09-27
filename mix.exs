@@ -42,8 +42,8 @@ defmodule RestClient.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:credo, "~> 1.4.0", only: [:dev]},
-      {:dialyxir, "~> 1.0.0", only: [:dev], runtime: false},
+      {:credo, "~> 1.4.0", only: [:dev, :test]},
+      {:dialyxir, "~> 1.0.0", only: [:dev, :test], runtime: false},
       {:ecto_sql, "~> 3.4"},
       {:excoveralls, "0.13.2"},
       {:floki, ">= 0.0.0", only: :test},

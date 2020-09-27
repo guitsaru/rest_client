@@ -1,4 +1,6 @@
 defmodule RestClient.Request do
+  @moduledoc "This struct represents an HTTP request"
+
   use Ecto.Schema
 
   alias RestClient.Header
