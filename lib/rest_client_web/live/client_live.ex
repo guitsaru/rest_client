@@ -1,4 +1,6 @@
 defmodule RestClientWeb.ClientLive do
+  @moduledoc "Renders the RestClient html client"
+
   use Phoenix.LiveView, container: {:div, class: "min-h-screen flex flex-col"}
   use Phoenix.HTML
 
@@ -21,7 +23,7 @@ defmodule RestClientWeb.ClientLive do
     <%= f = form_for(@form, "#", [phx_change: :validate, phx_submit: :send, class: "block relative flex-auto"]) %>
 
       <div class="absolute inset-0 flex flex-col">
-        <%= live_component @socket, LocationBarComponent, form: assigns[:form], f: f %>
+        <%= live_component @socket, LocationBarComponent, form: assigns.form, f: f %>
 
         <div class="grid flex-auto grid-cols-2 p-6">
           <%= live_component @socket, RequestComponent, id: "request", f: f, object: assigns[:request] %>

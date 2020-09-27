@@ -1,4 +1,6 @@
 defmodule RestClient do
+  @moduledoc "The API for RestClient. Makes requests to external endpoints."
+
   alias RestClient.{Header, Request, Response}
 
   @spec make_request(%Request{}) :: Response.t()
@@ -14,8 +16,11 @@ defmodule RestClient do
            headers,
            request.body
          ) do
-      {:ok, response} -> Response.from_mojito(response)
-      x -> x
+      {:ok, response} ->
+        Response.from_mojito(response)
+
+      {:error, %_{message: message} = x} ->
+        %Response{status: 400, body: message}
     end
   end
 
