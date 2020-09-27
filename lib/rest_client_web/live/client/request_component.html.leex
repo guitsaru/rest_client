@@ -1,6 +1,6 @@
-<div id="<%= @id %>-component" class="flex flex-col flex-auto ml-2 bg-white rounded-lg shadow">
+<div id="<%= @id %>-component" class="<%= if @hidden, do: "hidden" %> md:flex flex-col flex-auto ml-2 bg-white rounded-lg shadow">
   <div class="flex items-center px-4 py-5 border-b border-gray-200 sm:px-6">
-    <h3 class="ml-2 mr-8 text-lg font-medium leading-6 text-gray-900">
+    <h3 class="ml-2 mr-2 md:mr-8 text-lg font-medium leading-6 text-gray-900">
       <%= String.capitalize(@id) %>
     </h3>
 
@@ -30,9 +30,9 @@
       </nav>
     </div>
 
-    <%= if @object.complete do %>
-      <div><%= status_badge(assigns.object.status) %></div>
-    <% end %>
+      <%= if @object.complete do %>
+        <div><%= status_badge(assigns.object.status) %></div>
+      <% end %>
   </div>
 
   <%= if @current_tab == "body" && !@object.complete do %>

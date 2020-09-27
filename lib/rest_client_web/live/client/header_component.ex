@@ -10,17 +10,17 @@ defmodule RestClientWeb.Client.HeaderComponent do
     ~L"""
     <div class="p-8 bg-gray-800">
       <div class="mx-auto max-w-7xl">
-        <div class="md:flex md:items-center md:justify-between">
+        <div class="flex md:items-center md:justify-between">
           <div class="flex-1 min-w-0">
             <h2 class="text-2xl font-bold leading-7 text-white sm:text-3xl sm:leading-9 sm:truncate">
               RestClient
             </h2>
           </div>
 
-          <div class="flex text-gray-200">
+          <div class="flex flex-col md:flex-row text-gray-200">
             <a href="https://mattpruitt.com" class="mr-4">Made by Matt Pruitt</a>
 
-            <a href="https://github.com/guitsaru/rest_client" class="flex items-center">
+            <a href="https://github.com/guitsaru/rest_client" class="mt-2 md:mt-0 flex items-center">
               <%= Phoenix.View.render RestClientWeb.IconView, "github.html", %{} %>
 
               <span class="ml-2">View on GitHub</span>
