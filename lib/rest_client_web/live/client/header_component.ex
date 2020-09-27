@@ -17,10 +17,10 @@ defmodule RestClientWeb.Client.HeaderComponent do
             </h2>
           </div>
 
-          <div class="flex text-gray-200">
-            <a href="https://mattpruitt.com" class="mr-4">Made by Matt Pruitt</a>
+          <div class="flex flex-col md:flex-row text-gray-200">
+            <a href="https://mattpruitt.com" class="mt-4 md:mt-0 mr-4">Made by Matt Pruitt</a>
 
-            <a href="https://github.com/guitsaru/rest_client" class="flex items-center">
+            <a href="https://github.com/guitsaru/rest_client" class="mt-2 md:mt-0 flex items-center">
               <%= Phoenix.View.render RestClientWeb.IconView, "github.html", %{} %>
 
               <span class="ml-2">View on GitHub</span>
