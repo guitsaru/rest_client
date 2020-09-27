@@ -1,11 +1,11 @@
-<div class="flex flex-col md:flex-row w-full p-6 bg-white shadow">
+<div class="flex flex-col md:flex-row w-full px-6 md:py-6 bg-white shadow">
   <div class="mb-2 md:mb-0">
     <%= select @f, :action, ["GET": "get", "DELETE": "delete", "PATCH": "patch", "POST": "post", "PUT": "put", "OPTIONS": "options", "HEAD": "head"], class: "px-0 mt-1 form-select block w-full py-2 text-base leading-6 focus:shadow-none focus:outline-none focus:border-0 focus:border-transparent sm:text-sm sm:leading-5 border-0" %>
   </div>
 
   <%= url_input @f, :location, autofocus: true, class: "ml-1 mb-4 md:mb-0 md:ml-4 flex-1", placeholder: "https://example.com", autocomplete: "off" %>
 
-  <div class="md:ml-2">
+  <div class="md:ml-2 mb-4 md:mb-0">
     <%= Phoenix.View.render ComponentView, "button_with_icon.html", text: "Send", icon: "send.html", type: "submit" %>
   </div>
 </div>
