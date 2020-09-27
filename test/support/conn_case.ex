@@ -31,12 +31,12 @@ defmodule RestClientWeb.ConnCase do
     end
   end
 
-  setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(RestClient.Repo)
+  setup _tags do
+    # :ok = Ecto.Adapters.SQL.Sandbox.checkout(RestClient.Repo)
 
-    unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(RestClient.Repo, {:shared, self()})
-    end
+    # unless tags[:async] do
+    #   Ecto.Adapters.SQL.Sandbox.mode(RestClient.Repo, {:shared, self()})
+    # end
 
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end

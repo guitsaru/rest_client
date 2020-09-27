@@ -1,0 +1,13 @@
+{
+  "skip_files": [
+    "test/",
+    "lib/rest_client/repo.ex",
+    "lib/rest_client/application.ex",
+    "lib/rest_client_web/gettext.ex",
+    "lib/rest_client_web/channels/user_socket.ex",
+    "lib/rest_client_web/rest_client_web.ex",
+    "lib/rest_client_web.ex",
+    "lib/rest_client_web/router.ex",
+    "lib/rest_client_web/views/error_helpers.ex"
+  ]
+}

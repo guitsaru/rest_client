@@ -1,4 +1,4 @@
-<div class="flex flex-col flex-auto ml-2 bg-white rounded-lg shadow">
+<div id="<%= @id %>-component" class="flex flex-col flex-auto ml-2 bg-white rounded-lg shadow">
   <div class="flex items-center px-4 py-5 border-b border-gray-200 sm:px-6">
     <h3 class="ml-2 mr-8 text-lg font-medium leading-6 text-gray-900">
       <%= String.capitalize(@id) %>
@@ -42,7 +42,7 @@
   <% end %>
 
   <%= if @current_tab == "body" && @object.complete do %>
-    <textarea phx-hook="InitializeEditor" class="w-full h-auto" data-readonly=true data-mimetype="<%= Enum.into(@object.headers, %{})["content-type"] %>" disabled>
+    <textarea id="<%= @id %>-body" phx-hook="InitializeEditor" class="w-full h-auto" data-readonly=true data-mimetype="<%= Enum.find(@object.headers, %RestClient.Header{}, fn h -> h.key == "content-type" end).value %>" disabled>
       <%= @object.body %>
     </textarea>
   <% end %>
@@ -65,14 +65,14 @@
             </thead>
 
             <tbody>
-              <%= for {key, value} <- assigns.object.headers do %>
+              <%= for header <- @object.headers do %>
                 <tr>
                   <td class="px-6 py-4 text-sm font-medium leading-5 text-gray-900 whitespace-no-wrap">
-                    <%= key %>
+                    <%= header.key %>
                   </td>
 
                   <td class="px-6 py-4 text-sm leading-5 text-gray-500 break-word">
-                    <%= value %>
+                    <%= header.value %>
                   </td>
                 </tr>
               <% end %>
