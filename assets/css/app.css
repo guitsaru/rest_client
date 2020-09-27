@@ -26,12 +26,28 @@
   @apply text-blue-800 bg-blue-200;
 }
 
+.tab.active-border {
+  @apply text-blue-700 border-b-2 border-blue-700 rounded-none px-1;
+}
+
+.tab.active-border:focus {
+  @apply text-blue-800 border-b-2 border-blue-800 bg-transparent;
+}
+
 .tab.inactive {
   @apply text-gray-500;
 }
 
 .tab.inactive:hover {
   @apply text-gray-700;
+}
+
+.tab.inactive-border {
+  @apply text-gray-500 rounded-none px-1 mx-1;
+}
+
+.tab.inactive-border:hover {
+  @apply text-gray-700 border-b border-2 border-gray-700;
 }
 
 .tab.inactive:focus {

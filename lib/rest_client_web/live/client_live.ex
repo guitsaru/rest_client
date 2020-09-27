@@ -25,9 +25,31 @@ defmodule RestClientWeb.ClientLive do
       <div class="absolute inset-0 flex flex-col">
         <%= live_component @socket, LocationBarComponent, form: assigns.form, f: f %>
 
-        <div class="grid flex-auto grid-cols-2 p-6">
-          <%= live_component @socket, RequestComponent, id: "request", f: f, object: assigns[:request] %>
-          <%= live_component @socket, RequestComponent, id: "response", f: f, object: assigns[:response] %>
+        <nav class="flex md:hidden pt-1 px-8 bg-white border-t border-1">
+          <a
+            href="#"
+            class="tab <%= if @current_tab == "request", do: "active-border", else: "inactive-border" %>"
+            phx-click="set_current_tab"
+            phx-value-name="request"
+            <%= if @current_tab == "request", do: "aria-current=\"page\"" %>
+          >
+            Request
+          </a>
+
+          <a
+            href="#"
+            class="tab <%= if @current_tab == "response", do: "active-border", else: "inactive-border" %>"
+            phx-click="set_current_tab"
+            phx-value-name="response"
+            <%= if @current_tab == "response", do: "aria-current=\"page\"" %>
+          >
+            Response
+          </a>
+        </nav>
+
+        <div class="md:grid flex-auto md:grid-cols-2 p-6">
+          <%= live_component @socket, RequestComponent, id: "request", hidden: assigns.current_tab != "request", f: f, object: assigns[:request] %>
+          <%= live_component @socket, RequestComponent, id: "response", hidden: assigns.current_tab != "response", f: f, object: assigns[:response] %>
         </div>
       </div>
     </form>
@@ -45,6 +67,7 @@ defmodule RestClientWeb.ClientLive do
       |> assign(:request, request)
       |> assign(:form, form)
       |> assign(:response, %Response{})
+      |> assign(:current_tab, "request")
 
     {:ok, socket}
   end
@@ -62,6 +85,7 @@ defmodule RestClientWeb.ClientLive do
       socket
       |> assign(:response, response)
       |> assign(:form, changeset)
+      |> assign(:current_tab, "response")
 
     {:noreply, socket}
   end
@@ -109,6 +133,10 @@ defmodule RestClientWeb.ClientLive do
       |> assign(:form, form)
 
     {:noreply, socket}
+  end
+
+  def handle_event("set_current_tab", %{"name" => name}, socket) do
+    {:noreply, assign(socket, :current_tab, name)}
   end
 
   defp headers_changeset(header, attributes) do
