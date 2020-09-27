@@ -13,7 +13,12 @@ defmodule RestClientWeb.Client.RequestComponentTest do
     form = Ecto.Changeset.change(object, %{})
     f = Form.form_for(form, "#")
 
-    assert render_component(RequestComponent, id: "test component", object: object, f: f) =~
+    assert render_component(RequestComponent,
+             id: "test component",
+             object: object,
+             f: f,
+             hidden: false
+           ) =~
              "Test component"
   end
 
