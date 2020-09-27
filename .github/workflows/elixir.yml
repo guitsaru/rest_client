@@ -61,8 +61,7 @@ jobs:
       - name: Install deps
         run: |
           mix deps.get
-          (cd apps/influent_web/assets && yarn)
-          (cd apps/tako_web/assets && yarn)
+          (cd assets && yarn)
 
       - run: mix format --check-formatted
       - run: mix credo --strict
