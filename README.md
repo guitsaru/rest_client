@@ -2,6 +2,8 @@
 
 This is an experiment to create a simple REST API client using Phoenix LiveView.
 
+![read the blog post](https://mattpruitt.com/articles/rest-client-a-phoenix-liveview-experiment)
+
 ![rest-client](https://user-images.githubusercontent.com/5169/94362596-bd19e100-00e6-11eb-8404-42e78e249ac1.gif)
 
 To start the server:
